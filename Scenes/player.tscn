@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ufjsv34x2t2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
+size = Vector2(145, 2.5)
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-73, -17, 72, -17, 72, 16, -73, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -16.25)
+shape = SubResource("RectangleShape2D_sh265")
+debug_color = Color(0, 0, 0, 1)

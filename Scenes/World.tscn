@@ -1,0 +1,259 @@
+[gd_scene load_steps=15 format=3 uid="uid://bpjtsy5wq15rr"]
+
+[ext_resource type="PackedScene" uid="uid://ufjsv34x2t2" path="res://Scenes/player.tscn" id="1_q6thf"]
+[ext_resource type="Script" uid="uid://dcwv5ffvwmyo1" path="res://Scripts/Main.gd" id="1_wygdx"]
+[ext_resource type="Script" uid="uid://fst4kyg1vlva" path="res://Scripts/player.gd" id="2_c60qw"]
+[ext_resource type="PackedScene" uid="uid://d3rawqweeqhi5" path="res://Scenes/palla.tscn" id="2_wh08c"]
+[ext_resource type="Script" uid="uid://d3xttp7mmprrp" path="res://Scripts/player2.gd" id="4_ofrvq"]
+[ext_resource type="FontFile" uid="uid://bai056rsk003t" path="res://mago2.ttf" id="5_eu7l1"]
+[ext_resource type="Texture2D" uid="uid://yy2jx0xhljng" path="res://Arts/circle.png" id="6_p1v5b"]
+[ext_resource type="AudioStream" uid="uid://cn1ih78o1d4t6" path="res://Arts/Sounds/score.wav" id="8_q2d71"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y3be0"]
+size = Vector2(1152, 20)
+
+[sub_resource type="Animation" id="Animation_bah7m"]
+resource_name = "LabelOpacityRegulator"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Start:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2.03333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_wygdx"]
+resource_name = "OnScoreAnimation"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Start:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control/Start:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.03333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_fv4w7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Start:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Start:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fvag4"]
+_data = {
+&"LabelOpacityRegulator": SubResource("Animation_bah7m"),
+&"OnScoreAnimation": SubResource("Animation_wygdx"),
+&"RESET": SubResource("Animation_fv4w7")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wygdx"]
+size = Vector2(54, 618)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_wygdx")
+
+[node name="Player1" parent="." instance=ExtResource("1_q6thf")]
+modulate = Color(0, 0.552941, 0.839216, 1)
+position = Vector2(1152, 300)
+rotation = -1.5708
+script = ExtResource("2_c60qw")
+metadata/_edit_group_ = true
+
+[node name="Player" parent="." instance=ExtResource("1_q6thf")]
+modulate = Color(0.745098, 0.278431, 0.262745, 1)
+position = Vector2(0, 300)
+rotation = 1.5708
+script = ExtResource("4_ofrvq")
+metadata/_edit_group_ = true
+
+[node name="Palla" parent="." instance=ExtResource("2_wh08c")]
+position = Vector2(576, 325)
+scale = Vector2(1.2, 1.2)
+
+[node name="Border" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Border"]
+position = Vector2(576, 652)
+shape = SubResource("RectangleShape2D_y3be0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
+position = Vector2(576, -4)
+shape = SubResource("RectangleShape2D_y3be0")
+
+[node name="Line2D" type="Line2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(-5, 11)
+points = PackedVector2Array(4, 295, 1158, 296)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LabelL" type="Label" parent="Control"]
+z_index = -1
+layout_mode = 0
+offset_left = 363.0
+offset_top = -29.0
+offset_right = 403.0
+offset_bottom = 9.0
+scale = Vector2(4, 4)
+theme_override_colors/font_color = Color(0.745098, 0.278431, 0.262745, 1)
+theme_override_fonts/font = ExtResource("5_eu7l1")
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Start" type="Label" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = 223.0
+offset_top = 260.0
+offset_right = 401.0
+offset_bottom = 336.0
+scale = Vector2(4, 4)
+theme_override_fonts/font = ExtResource("5_eu7l1")
+theme_override_font_sizes/font_size = 48
+text = "Press start"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LabelR" type="Label" parent="Control"]
+z_index = -1
+layout_mode = 0
+offset_left = 635.0
+offset_top = -29.0
+offset_right = 675.0
+offset_bottom = 9.0
+scale = Vector2(4, 4)
+theme_override_colors/font_color = Color(0, 0.552941, 0.839216, 1)
+theme_override_fonts/font = ExtResource("5_eu7l1")
+theme_override_font_sizes/font_size = 48
+text = "0"
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.529412, 0.529412, 0.529412, 1)
+z_index = -1
+position = Vector2(-576, -323)
+scale = Vector2(2, 2)
+texture = ExtResource("6_p1v5b")
+centered = false
+
+[node name="Line2D3" type="Line2D" parent="Sprite2D"]
+z_index = -1
+position = Vector2(-186.5, 4)
+points = PackedVector2Array(474.5, 481.5, 1050.5, 481.5)
+width = 6.0
+default_color = Color(0.53, 0.53, 0.53, 1)
+
+[node name="Line2D4" type="Line2D" parent="Sprite2D"]
+z_index = -1
+position = Vector2(-186.5, -320)
+points = PackedVector2Array(474.5, 481.5, 1050.5, 481.5)
+width = 6.0
+default_color = Color(0.53, 0.53, 0.53, 1)
+
+[node name="Line2D" type="Line2D" parent="Sprite2D"]
+z_index = -1
+points = PackedVector2Array(576, 349.167, 576, 490)
+width = 6.0
+default_color = Color(0.53, 0.53, 0.53, 1)
+
+[node name="Line2D2" type="Line2D" parent="Sprite2D"]
+z_index = -1
+position = Vector2(0, -303.333)
+points = PackedVector2Array(576, 459.833, 576, 602.5)
+width = 6.0
+default_color = Color(0.529412, 0.529412, 0.529412, 1)
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_fvag4")
+}
+
+[node name="ScoreAreaR" type="Area2D" parent="."]
+position = Vector2(1244, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreAreaR"]
+position = Vector2(-42, 323)
+shape = SubResource("RectangleShape2D_wygdx")
+
+[node name="ScoreAreaL" type="Area2D" parent="."]
+position = Vector2(-5, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreAreaL"]
+position = Vector2(-42, 323)
+shape = SubResource("RectangleShape2D_wygdx")
+
+[node name="scoreSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_q2d71")
+
+[connection signal="area_entered" from="ScoreAreaR" to="." method="_on_score_area_r_area_entered"]
+[connection signal="body_entered" from="ScoreAreaR" to="." method="_on_score_area_r_body_entered"]
+[connection signal="area_entered" from="ScoreAreaL" to="." method="_on_score_area_l_area_entered"]
+[connection signal="body_entered" from="ScoreAreaL" to="." method="_on_score_area_l_body_entered"]
