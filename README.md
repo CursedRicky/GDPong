@@ -1,5 +1,5 @@
 # GDPong 
 ## A simple Pong game in GdScript
 
-![image](https://github.com/user-attachments/assets/34db2725-7e19-48b9-9817-28e811fda878)
+![image](<img width="1152" height="648" alt="image" src="https://github.com/user-attachments/assets/a28deee4-8966-4f18-acfb-7c3932a4e3d6" />)
 
